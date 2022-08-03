@@ -8,6 +8,8 @@ A place where you can preview the links, and visualise the meta data 😍.
 ![Architecture Diagram](https://github.com/ghana7989/previewfy/blob/master/public/assets/Architecture.drawio.png)
 
 - Used proxy server as I was facing CORS issue when invoked from Frontend
+- built an express server just for this project [here](https://github.com/ghana7989/simple-proxy-meta-tags)
+- server is deployed on vercel [here](https://simple-proxy-meta-tags.vercel.app/health)
 
 ## Demo
 
