@@ -8,12 +8,15 @@ import { isObjectDefined } from './utils/isObjectDefined';
 import { isUrl } from './utils/isUrl';
 import { withHttp } from './utils/withHttp';
 
+const serverUrl =
+	'https://simple-proxy-meta-tags-os4b20rmz-ghana7989.vercel.app' ||
+	'http://localhost:8080';
 function App() {
 	const [proxyResponse, setProxyResponse] = useState({} as IProxyResponse);
 	const [url, setUrl] = useState('');
 	const handleOnClick: FormEventHandler<HTMLButtonElement> = async () => {
 		const {data}: {data: IProxyResponse} = await axios.post(
-			'http://localhost:8080/proxy/get-meta',
+			`${serverUrl}/proxy/get-meta`,
 			{
 				url: withHttp(url),
 			},
