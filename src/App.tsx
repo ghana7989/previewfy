@@ -20,6 +20,10 @@ function App() {
 		);
 		setProxyResponse(data);
 	};
+	const handleReset = () => {
+		setUrl('');
+		setProxyResponse({} as IProxyResponse);
+	};
 	const countRef = useRef<number>(0);
 
 	// This useEffect id for clipboard functionality
@@ -38,35 +42,44 @@ function App() {
 	}, []);
 
 	return (
-		<div className='flex items-center justify-center w-full h-screen'>
-			<div className='flex flex-col items-center justify-center p-10 border rounded-lg border-slate-500 '>
-				<div className='flex w-full'>
-					<input
-						value={url}
-						onChange={e => setUrl(e.target.value)}
-						type='text'
-						placeholder='Paste URL'
-						className='w-full max-w-xs mx-auto rounded-none input input-primary'
-					/>
-					<button
-						onClick={handleOnClick}
-						className='rounded-none btn btn-primary'>
-						Get Preview
-					</button>
+		<>
+			<div className='flex items-center justify-center w-full h-screen'>
+				<div className='flex flex-col items-center justify-center p-10 border rounded-lg border-slate-500 '>
+					<div className='flex w-full'>
+						<input
+							value={url}
+							onChange={e => setUrl(e.target.value)}
+							type='text'
+							placeholder='Paste URL'
+							className='w-full max-w-xs mx-auto rounded-none input input-primary'
+						/>
+						<button
+							onClick={handleOnClick}
+							className='rounded-none btn btn-primary'>
+							Get Preview
+						</button>
+					</div>
+					<div className='h-3' />
+					{isObjectDefined(proxyResponse) && url ? (
+						<LinkPreview
+							images={proxyResponse.images || []}
+							meta={proxyResponse.meta || {}}
+							og={proxyResponse.og || {}}
+						/>
+					) : (
+						<h1>{!url ? 'Paste a link' : 'Press Get Preview'}</h1>
+					)}
+					<Toaster />
+					{isObjectDefined(proxyResponse) && url && (
+						<button
+							className='mt-6 text-lg font-bold text-white rounded-none btn btn-error w-60'
+							onClick={handleReset}>
+							Reset
+						</button>
+					)}
 				</div>
-				<div className='h-3' />
-				{isObjectDefined(proxyResponse) ? (
-					<LinkPreview
-						images={proxyResponse.images || []}
-						meta={proxyResponse.meta || {}}
-						og={proxyResponse.og || {}}
-					/>
-				) : (
-					<h1>{!url ? 'Paste a link' : 'Press Get Preview'}</h1>
-				)}
-				<Toaster />
 			</div>
-		</div>
+		</>
 	);
 }
 
