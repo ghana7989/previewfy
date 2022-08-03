@@ -4,11 +4,18 @@ export default function Navbar() {
 	return (
 		<div className='navbar bg-base-100'>
 			<div className='flex-1'>
-				<a className='text-xl normal-case btn btn-ghost'>PreviewFy</a>
+				<a className='text-xl normal-case btn btn-ghost'>
+					<img
+						width={250}
+						src={`${process.env.PUBLIC_URL}/assets/cooltext416692887699557.png`}
+						alt='logo of previewfy'
+					/>
+				</a>
 			</div>
 			<div className='flex-none'>
 				<a
 					target='_blank'
+					rel='noreferrer'
 					href='https://github.com/ghana7989/previewfy'
 					className='text-xl normal-case btn btn-ghost'>
 					github ↗
