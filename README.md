@@ -3,6 +3,12 @@
 
 A place where you can preview the links, and visualise the meta data 😍.
 
+## How did I do it?
+
+![Architecture Diagram](https://github.com/ghana7989/previewfy/blob/master/public/assets/Architecture.drawio.png)
+
+- Used proxy server as I was facing CORS issue when invoked from Frontend
+
 ## Demo
 
 deployed app - <https://previewfy.vercel.app/>
@@ -46,3 +52,7 @@ Start the app
 ```bash
   yarn start
 ```
+
+## Authors
+
+- [@ghana7989](https://www.github.com/ghana7989)
