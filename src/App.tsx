@@ -1,15 +1,16 @@
 import axios from 'axios';
-import React, { FormEvent, FormEventHandler, useEffect, useRef, useState } from 'react';
+import { FormEventHandler, useEffect, useRef, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 import LinkPreview from './components/LinkPreview';
 import { IProxyResponse } from './types/response.types';
 import { isObjectDefined } from './utils/isObjectDefined';
+import { isUrl } from './utils/isUrl';
 import { withHttp } from './utils/withHttp';
 
 function App() {
-	const [url, setUrl] = useState('');
 	const [proxyResponse, setProxyResponse] = useState({} as IProxyResponse);
-	const [clipboardUrl, setClipboardUrl] = useState('');
+	const [url, setUrl] = useState('');
 	const handleOnClick: FormEventHandler<HTMLButtonElement> = async () => {
 		const {data}: {data: IProxyResponse} = await axios.post(
 			'http://localhost:8080/proxy/get-meta',
@@ -19,28 +20,37 @@ function App() {
 		);
 		setProxyResponse(data);
 	};
+	const countRef = useRef<number>(0);
+
+	// This useEffect id for clipboard functionality
 	useEffect(() => {
+		// This is to make sure it only runs once
+		if (url || countRef.current > 0) return;
 		(async function () {
-			const something = await navigator.clipboard.readText();
-			console.log('🚀 ---------------------------------------------------🚀');
-			console.log('🚀 ~ file: App.tsx ~ line 25 ~ something', something);
-			console.log('🚀 ---------------------------------------------------🚀');
+			countRef.current++;
+			const clipboardString = await navigator.clipboard.readText();
+			const validUrl = isUrl(clipboardString);
+			if (validUrl && !url) {
+				setUrl(clipboardString);
+				toast.success('pasted the link from clipboard');
+			}
 		})();
 	}, []);
+
 	return (
 		<div className='flex items-center justify-center w-full h-screen'>
-			<div className='flex flex-col items-center justify-center border p-10 rounded-lg border-slate-500 '>
+			<div className='flex flex-col items-center justify-center p-10 border rounded-lg border-slate-500 '>
 				<div className='flex w-full'>
 					<input
 						value={url}
 						onChange={e => setUrl(e.target.value)}
 						type='text'
 						placeholder='Paste URL'
-						className='input input-primary rounded-none w-full max-w-xs mx-auto'
+						className='w-full max-w-xs mx-auto rounded-none input input-primary'
 					/>
 					<button
 						onClick={handleOnClick}
-						className='btn btn-primary rounded-none'>
+						className='rounded-none btn btn-primary'>
 						Get Preview
 					</button>
 				</div>
@@ -52,8 +62,9 @@ function App() {
 						og={proxyResponse.og || {}}
 					/>
 				) : (
-					<h1>Paste a link</h1>
+					<h1>{!url ? 'Paste a link' : 'Press Get Preview'}</h1>
 				)}
+				<Toaster />
 			</div>
 		</div>
 	);

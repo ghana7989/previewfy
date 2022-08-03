@@ -8,7 +8,7 @@ export default function LinkPreview({images, meta, og}: ILinkPreviewProps) {
 	const isVideo = og.type?.includes('video');
 	return (
 		<div>
-			<div className='card w-96 bg-accent-content bg-opacity-50 shadow-xl'>
+			<div className='bg-opacity-50 shadow-xl card w-96 bg-accent-content'>
 				<figure className='outline-dashed outline-zinc-500'>
 					<img
 						src={
@@ -17,17 +17,17 @@ export default function LinkPreview({images, meta, og}: ILinkPreviewProps) {
 						}
 						alt='preview'
 						className={`${
-							isVideo ? 'aspect-video' : 'aspect-square w-60 py-2 bg-white'
+							isVideo ? 'aspect-video' : 'aspect-auto w-full py-2 bg-white'
 						}`}
 					/>
-					<div className='badge badge-info absolute top-2 right-2 '>
+					<div className='absolute badge badge-info top-2 right-2 '>
 						<a href={og.url} target='_blank'>
 							{truncate(og.site_name || meta.title || '', 20)}
 						</a>
 					</div>
 				</figure>
-				<div className='card-body justify-end'>
-					<h2 className='card-title w-full text-white'>
+				<div className='justify-end card-body'>
+					<h2 className='w-full text-white card-title'>
 						{og.title || meta.title}
 					</h2>
 					<span className='w-full text-gray-500'>
