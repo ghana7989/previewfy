@@ -42,7 +42,7 @@ function App() {
 				toast.success('pasted the link from clipboard');
 			}
 		})();
-	}, []);
+	}, [url]);
 
 	return (
 		<>

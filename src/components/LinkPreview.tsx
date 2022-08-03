@@ -20,7 +20,7 @@ export default function LinkPreview({meta, og}: ILinkPreviewProps) {
 					}`}
 				/>
 				<div className='absolute badge badge-info top-2 right-2 '>
-					<a href={og.url} target='_blank'>
+					<a href={og.url} target='_blank' rel='noreferrer'>
 						{truncate(og.site_name || meta.title || '', 20)}
 					</a>
 				</div>
