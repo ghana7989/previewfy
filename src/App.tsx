@@ -15,6 +15,10 @@ function App() {
 	const [proxyResponse, setProxyResponse] = useState({} as IProxyResponse);
 	const [url, setUrl] = useState('');
 	const handleOnClick: FormEventHandler<HTMLButtonElement> = async () => {
+		if (!isUrl(url)) {
+			toast.error('Please enter a valid URL');
+			return;
+		}
 		const {data}: {data: IProxyResponse} = await axios.post(
 			`${serverUrl}/proxy/get-meta`,
 			{
